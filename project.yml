@@ -295,11 +295,12 @@ Resources:
             UserData:
              Fn::Base64: !Sub |
                 #!/bin/bash
+                sudo apt update
+                sudo apt install awscli
                 sudo apt-get update -y
                 sudo apt-get install apache2 -y
-                sudo systemctl start apache2.service
-                cd /var/www/html
-                echo "Udacity Demo Web Server Up and Running!" > index.html
+                sudo systemctl start apache2.service 
+                sudo aws s3 cp s3://udacity-project-2.1/project2 /var/www/html/. --recursive 
           
             # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
             ImageId: ami-0574da719dca65348
@@ -307,6 +308,7 @@ Resources:
             KeyName: ssh
             SecurityGroups:
             - Ref: EC2sSG
+            IamInstanceProfile: !Ref RootInstanceProfile
             InstanceType: t3.medium
             BlockDeviceMappings:
             - DeviceName: "/dev/sdk"
@@ -411,17 +413,42 @@ Resources:
             SourceDestCheck: true
 ##################################################################################
 
-  RolePolicies:
-    Type: AWS::IAM::Policy
-    DependsOn:
-      - SFTPGatewayInstance
-    Properties:
-      PolicyName: SFTPGatewayInstancePolicy
-      PolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Action: 's3:*'
-            Resource: '*'
-      Roles:
-        - !Ref S3WritableRole
+    RolePolicies:
+        Type: AWS::IAM::Policy
+        DependsOn:
+        - BationHost
+        Properties:
+            PolicyName: BastionHostPolicy
+            PolicyDocument:
+             Version: 2012-10-17
+             Statement:
+                 - Effect: Allow
+                   Action: 's3:*'
+                   Resource: '*'
+            Roles:
+                - !Ref S3WritableRole
+
+##################################################################################
+
+    RootInstanceProfile:
+        Type: AWS::IAM::InstanceProfile
+        Properties:
+            Path: /
+            Roles:
+                - !Ref S3WritableRole
+
+##################################################################################
+
+    S3WritableRole:
+        Type: AWS::IAM::Role
+        Properties:
+            AssumeRolePolicyDocument:
+                Version: 2012-10-17
+                Statement:
+                 - Effect: Allow
+                   Principal:
+                    Service: ec2.amazonaws.com
+                   Action: sts:AssumeRole
+            Path: /
+
+##################################################################################
