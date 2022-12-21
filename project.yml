@@ -383,3 +383,19 @@ Resources:
             UnhealthyThresholdCount: 5
             VpcId: 
               Ref: ProjectVPC
+
+#################################################################################
+
+    ServerInstance: 
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.micro
+      ImageId: !Ref AMItoUse
+      IamInstanceProfile: !Ref ServerInstanceProfile
+      NetworkInterfaces: 
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet: 
+            - Ref: "WebAccessSecurityGroup"
+          SubnetId: 
+            Ref: "SubnetForServer"
