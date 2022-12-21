@@ -304,8 +304,6 @@ Resources:
                 sudo systemctl restart apache2.service 
             # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
             ImageId: ami-0574da719dca65348
-            # ToDo: Change the key-pair name, as applicable to you. 
-            KeyName: ssh
             SecurityGroups:
             - Ref: EC2sSG
             IamInstanceProfile: !Ref RootInstanceProfile
@@ -395,7 +393,6 @@ Resources:
      DependsOn:
         - PublicSubnetOne
      Properties:
-      KeyName: ssh
       InstanceType: t2.micro
       ImageId: ami-0574da719dca65348
       NetworkInterfaces: 
