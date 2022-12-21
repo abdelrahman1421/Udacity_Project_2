@@ -296,12 +296,12 @@ Resources:
              Fn::Base64: !Sub |
                 #!/bin/bash
                 sudo apt update
-                sudo apt install awscli
+                sudo apt install awscli -y
                 sudo apt-get update -y
                 sudo apt-get install apache2 -y
                 sudo systemctl start apache2.service 
-                sudo aws s3 cp s3://udacity-project-2.1/project2 /var/www/html/. --recursive 
-          
+                sudo aws s3 cp s3://udacity-project-2.1/project2 /var/www/html/. --recursive
+                sudo systemctl restart apache2.service 
             # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
             ImageId: ami-0574da719dca65348
             # ToDo: Change the key-pair name, as applicable to you. 
@@ -335,6 +335,8 @@ Resources:
      
     WebAppLB:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        DependsOn:
+        - InternetGateway
         Properties:
             Subnets:
             - !Ref PublicSubnetOne
@@ -390,6 +392,8 @@ Resources:
 
     BationHost: 
      Type: AWS::EC2::Instance
+     DependsOn:
+        - PublicSubnetOne
      Properties:
       KeyName: ssh
       InstanceType: t2.micro
@@ -405,6 +409,8 @@ Resources:
 #################################################################################
     NIT:
         Type: 'AWS::EC2::NetworkInterface'
+        DependsOn:
+        - PublicSubnetOne
         Properties:
             SubnetId: !Ref PublicSubnetOne
             Description: Interface for controlling traffic such as SSH
