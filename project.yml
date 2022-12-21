@@ -386,16 +386,15 @@ Resources:
 
 #################################################################################
 
-    ServerInstance: 
+    BationHost: 
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType: t3.micro
-      ImageId: !Ref AMItoUse
-      IamInstanceProfile: !Ref ServerInstanceProfile
+      InstanceType: t2.micro
+      ImageId: ami-0574da719dca65348
+      SecurityGroupIds:
+        - Ref:  BastionHostSG
       NetworkInterfaces: 
         - AssociatePublicIpAddress: "true"
           DeviceIndex: "0"
-          GroupSet: 
-            - Ref: "WebAccessSecurityGroup"
           SubnetId: 
-            Ref: "SubnetForServer"
+            Ref: PublicSubnetOne
