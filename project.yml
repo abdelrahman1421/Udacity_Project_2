@@ -458,3 +458,11 @@ Resources:
             Path: /
 
 ##################################################################################
+Outputs:
+  LoadBalancerUrl:
+    Description: The URL of the ALB
+    Value: !Join [ "://", [ http,!GetAtt WebAppLB.DNSName ] ]
+
+  BastionHostIP:
+    Description: The URL of the ALB
+    Value: !GetAtt BationHost.PublicIp
