@@ -3,7 +3,7 @@
 
 The project is to Deploy a simple HTML/CSS application using auto scailing group launched in two private subnet in two difrrent AZs and a Public LoadBalancer to forward traffic to these severs
 # Projetc Overview And Architecture
-<!-- ![GCP horizontal framework](https://user-images.githubusercontent.com/73159522/202285588-7aefb042-b6ae-4661-8ef0-6b25666c7880.jpeg) -->
+![AWS (2019) horizontal framework](https://user-images.githubusercontent.com/73159522/208936479-04d7232a-e29c-4c77-8e5b-2c757032f099.png)
 
 ## 🛠 AWS Used Services :
 | Service | Purpose |
