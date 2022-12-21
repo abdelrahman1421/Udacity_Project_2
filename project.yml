@@ -387,14 +387,41 @@ Resources:
 #################################################################################
 
     BationHost: 
-    Type: AWS::EC2::Instance
-    Properties:
+     Type: AWS::EC2::Instance
+     Properties:
+      KeyName: ssh
       InstanceType: t2.micro
       ImageId: ami-0574da719dca65348
-      SecurityGroupIds:
-        - Ref:  BastionHostSG
       NetworkInterfaces: 
         - AssociatePublicIpAddress: "true"
           DeviceIndex: "0"
+          GroupSet: 
+            - Ref: "BastionHostSG"
           SubnetId: 
-            Ref: PublicSubnetOne
+            Ref: "PublicSubnetOne"
+
+#################################################################################
+    NIT:
+        Type: 'AWS::EC2::NetworkInterface'
+        Properties:
+            SubnetId: !Ref PublicSubnetOne
+            Description: Interface for controlling traffic such as SSH
+            GroupSet:
+                - !Ref BastionHostSG
+            SourceDestCheck: true
+##################################################################################
+
+  RolePolicies:
+    Type: AWS::IAM::Policy
+    DependsOn:
+      - SFTPGatewayInstance
+    Properties:
+      PolicyName: SFTPGatewayInstancePolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 's3:*'
+            Resource: '*'
+      Roles:
+        - !Ref S3WritableRole
