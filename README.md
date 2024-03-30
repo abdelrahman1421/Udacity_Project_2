@@ -1,7 +1,7 @@
-# Udacity_Project_2
+# Description
 
 
-The project is to Deploy a simple HTML/CSS application using auto scailing group launched in two private subnet in two difrrent AZs and a Public LoadBalancer to forward traffic to these severs
+The project is to Deploy a simple HTML/CSS application using an auto-scaling group launched in two private subnets in two different AZs and a Public LoadBalancer to forward traffic to these servers
 # Projetc Overview And Architecture
 ![AWS (2019) horizontal framework](https://user-images.githubusercontent.com/73159522/208936479-04d7232a-e29c-4c77-8e5b-2c757032f099.png)
 
@@ -13,11 +13,11 @@ The project is to Deploy a simple HTML/CSS application using auto scailing group
 | [ CoudFormation ](https://docs.aws.amazon.com/cloudformation/index.html) | AWS CloudFormation lets you model, provision, and manage AWS and third-party resources by treating infrastructure as code. |
 | [ EC2 ](https://docs.aws.amazon.com/ec2/index.html) | Amazon Elastic Compute Cloud (Amazon EC2) offers the broadest and deepest compute platform.|
 | [ ELB ](https://docs.aws.amazon.com/elasticloadbalancing/index.html) | Elastic Load Balancer used to distribute network traffic to improve application scalability. |
-| [ ASG ](https://docs.aws.amazon.com/autoscaling/index.html) | An Auto Scaling group contains a collection of EC2 instances that are treated as a logical grouping for the purposes of automatic scaling and management. |
+| [ ASG ](https://docs.aws.amazon.com/autoscaling/index.html) | An Auto Scaling group contains a collection of EC2 instances that are treated as a logical grouping for automatic scaling and management. |
 
 ## Configure Infrastructure Using CloudFormation :
 
-ClodFormation is used to provide a stable and managed Infrastructure to the project
+ClodFormation is used to provide a stable and managed Infrastructure for the project
 - ###  Network Contains The Following Resources :
   - VPC that project will be assigned to
   - Two public and private subnets
